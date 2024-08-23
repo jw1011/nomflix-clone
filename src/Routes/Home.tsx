@@ -1,8 +1,24 @@
+import { useQuery } from "react-query";
+import { getMovies, IGetMoviesResult } from "../api";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  background-color: black;
+`;
+
+const Loader = styled.div`
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function Home() {
-  return (
-    <div style={{ backgroundColor: "whitesmoke", height: "200vh" }}>
-      <h1>Home</h1>
-    </div>
+  const { data, isLoading } = useQuery<IGetMoviesResult>(
+    ["movies", "nowPlaying"],
+    getMovies
   );
+  console.log(data, isLoading);
+  return <Wrapper>{isLoading ? <Loader>Loading...</Loader> : null}</Wrapper>;
 }
 export default Home;
